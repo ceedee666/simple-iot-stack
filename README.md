@@ -13,3 +13,4 @@ This repository is based on the following repositories, videos and documentation
 - https://github.com/Miceuz/docker-compose-mosquitto-influxdb-telegraf-grafana
 - https://youtu.be/QGG_76OmRnA
 - https://www.influxdata.com/blog/running-influxdb-2-0-and-telegraf-using-docker/
+- https://techoverflow.net/2021/11/25/how-to-setup-standalone-mosquitto-mqtt-broker-using-docker-compose/
