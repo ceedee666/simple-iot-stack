@@ -1,0 +1,55 @@
+version: "3"
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    restart: always
+    ports:
+      - ${MOSQUITTO_PORT}:1883
+    networks:
+      - iot
+    volumes:
+      - ${MOSQUITTO_CFG_PATH}:/mosquitto/config/mosquitto.conf
+      - ${MOSQUITTO_PASSWD_PATH}:/mosquitto/config/mosquitto.passwd:rw
+
+  influxdb:
+    image: influxdb:latest
+    volumes:
+      - influxdb-storage:/var/lib/influxdb2:rw
+    env_file:
+      - environment.env
+    entrypoint: ["./entrypoint.sh"]
+    restart: always
+    ports:
+      - ${DOCKER_INFLUXDB_INIT_PORT}:8086
+    networks:
+      - iot
+
+  telegraf:
+    image: telegraf:latest
+    volumes:
+      - ${TELEGRAF_CFG_PATH}:/etc/telegraf/telegraf.conf:rw
+    env_file:
+      - environment.env
+    depends_on:
+      - influxdb
+      - mosquitto
+    restart: always
+    networks:
+      - iot
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    volumes:
+      - grafana-storage:/var/lib/grafana:rw
+    depends_on:
+      - influxdb
+    ports:
+      - ${GRAFANA_PORT}:3000
+    networks:
+      - iot
+
+volumes:
+  grafana-storage:
+  influxdb-storage:

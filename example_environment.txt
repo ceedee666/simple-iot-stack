@@ -1,0 +1,60 @@
+################################################################################
+# These values must be changed!
+################################################################################
+
+# Primary InfluxDB admin/superuser credentials
+DOCKER_INFLUXDB_INIT_USERNAME= -----> changeme <-----
+DOCKER_INFLUXDB_INIT_PASSWORD= -----> changeme <-----
+DOCKER_INFLUXDB_INIT_ADMIN_TOKEN= -----> changeme <----- 
+
+# Mosquitto username and password
+MOSQUITTO_USERNAME= -----> changeme <-----
+MOSQUITTO_PASSWORD= -----> changeme <-----
+
+################################################################################
+# Environment variables used during the setup and operation of the stack
+################################################################################
+
+#-------------------------------------------------------------------------------
+# InfluxDB
+#-------------------------------------------------------------------------------
+DOCKER_INFLUXDB_INIT_MODE=setup
+
+# Primary InfluxDB organization & bucket definitions
+DOCKER_INFLUXDB_INIT_ORG=IoT
+DOCKER_INFLUXDB_INIT_BUCKET=sensor-data
+
+# Primary InfluxDB bucket retention period
+# NOTE: Valid units are nanoseconds (ns), microseconds(us), milliseconds (ms)
+# seconds (s), minutes (m), hours (h), days (d), and weeks (w).
+# 0 means infinite retention
+DOCKER_INFLUXDB_INIT_RETENTION=0
+
+# InfluxDB port & hostname definitions
+DOCKER_INFLUXDB_INIT_PORT=8086 
+DOCKER_INFLUXDB_INIT_HOST=influxdb 
+
+#-------------------------------------------------------------------------------
+# Telegraf
+#-------------------------------------------------------------------------------
+
+# Telegraf configuration file
+# Will be mounted to container and used as telegraf configuration
+TELEGRAF_CFG_PATH=./telegraf/telegraf.conf
+
+#-------------------------------------------------------------------------------
+# Grafana
+#-------------------------------------------------------------------------------
+
+# Grafana port definition
+GRAFANA_PORT=3000
+
+#-------------------------------------------------------------------------------
+# Mosquitto 
+#-------------------------------------------------------------------------------
+
+# Mosquitto configuration file
+# Will be mounted to container and used as mosquitto configuration
+MOSQUITTO_PORT=1883
+MOSQUITTO_CFG_PATH=./mosquitto/mosquitto.conf
+MOSQUITTO_PASSWD_PATH=./mosquitto/mosquitto.passwd
