@@ -45,7 +45,7 @@ TELEGRAF_CFG_PATH=./telegraf/telegraf.conf
 #-------------------------------------------------------------------------------
 # Grafana
 #-------------------------------------------------------------------------------
-
+GRAFANA_PROVISIONING_PATH=./grafana/
 # Grafana port definition
 GRAFANA_PORT=3000
 

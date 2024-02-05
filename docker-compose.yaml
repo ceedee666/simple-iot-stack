@@ -3,7 +3,6 @@ version: "3"
 services:
   mosquitto:
     image: eclipse-mosquitto:latest
-    container_name: simple-iot-mosquitto
     env_file:
       - .env
     restart: always
@@ -12,12 +11,11 @@ services:
     networks:
       - iot
     volumes:
-      - mosquitto-config:/mosquitto/config
+      - mosquitto-all:/mosquitto
       - ${MOSQUITTO_CFG_PATH}:/mosquitto/config/mosquitto.conf
 
   influxdb:
     image: influxdb:latest
-    container_name: simple-iot-influxdb
     volumes:
       - influxdb-storage:/var/lib/influxdb2:rw
       - influxdb-config:/etc/influxdb2
@@ -32,7 +30,6 @@ services:
 
   telegraf:
     image: telegraf:latest
-    container_name: simple-iot-telegraf
     volumes:
       - ${TELEGRAF_CFG_PATH}:/etc/telegraf/telegraf.conf:rw
     env_file:
@@ -46,8 +43,7 @@ services:
 
   grafana:
     image: grafana/grafana-oss:latest
-    container_name: simple-iot-grafana
-    volumes:
+    volumes: ${GRAFANA_PROVISIONING_PATH}:/etc/grafana/provisioning
       - grafana-storage:/var/lib/grafana:rw
     env_file:
       - .env
@@ -62,7 +58,7 @@ networks:
   iot:
 
 volumes:
-  mosquitto-config:
+  mosquitto-all:
   grafana-storage:
   influxdb-storage:
   influxdb-config:
