@@ -90,7 +90,7 @@ I recommend using a password manager like [Bitwarden](https://bitwarden.com).
       following command
 
       ```zsh
-        docker-compose run --rm mosquitto mosquitto_passwd -c /mosquitto/conf/passwd mosquitto
+        docker-compose run --rm simple-iot-mosquitto mosquitto_passwd -c /mosquitto/conf/passwd mosquitto
       ```
 
 ### Starting the stack
