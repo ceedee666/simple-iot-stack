@@ -71,7 +71,11 @@ I recommend using a password manager like [Bitwarden](https://bitwarden.com).
    1. The final step is to create the username and password for the
       Mosquitto MQTT broker.
       This username and password need to be added to the `environment.env` file.
-      Additionally, the values need to be added to the `mosquitto.passwd` file.
+      These values are used by [Telegraf](https://github.com/influxdata/telegraf)
+      to authenticate with the broker.
+      Additionally, the values need to be added to the `passwd` file in the
+      `mosquitto` container.
+
       A possible username is `mosquitto`. A secure password can be generated using
       a password manager. The resulting lines in the `environment.env` should look
       similar to the excerpt below.
@@ -82,15 +86,16 @@ I recommend using a password manager like [Bitwarden](https://bitwarden.com).
         MOSQUITTO_PASSWORD=dummy-123-...
       ```
 
-      To add the password to the `mosquitto.passwd` file use the following command
+      To add the password for the user mosquitto to the `passwd` file use the
+      following command
 
       ```zsh
-        docker-compose exec mosquitto mosquitto_passwd -c /mosquitto/conf/mosquitto.passwd mosquitto
+        docker-compose run --rm mosquitto mosquitto_passwd -c /mosquitto/conf/passwd mosquitto
       ```
 
 ### Starting the stack
 
-Finally, the IoT stack can be started using the following command:
+After finishing the configuration is is now time to start the IoT stack.
 
 ```zsh
   docker-compose up -d
