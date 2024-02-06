@@ -43,7 +43,8 @@ services:
 
   grafana:
     image: grafana/grafana-oss:latest
-    volumes: ${GRAFANA_PROVISIONING_PATH}:/etc/grafana/provisioning
+    volumes: 
+      - ${GRAFANA_PROVISIONING_PATH}:/etc/grafana/provisioning
       - grafana-storage:/var/lib/grafana:rw
     env_file:
       - .env
