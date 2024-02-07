@@ -31,7 +31,7 @@ I recommend using a password manager like [Bitwarden](https://bitwarden.com).
        └── telegraf.conf
    ```
 
-1. Copy the file `example_evironment.txt` to `environment.env`. For example, by
+1. Copy the file `example_evironment.txt` to `.env`. For example, by
    using the following command.
 
    ```zsh
