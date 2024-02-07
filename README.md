@@ -38,7 +38,7 @@ I recommend using a password manager like [Bitwarden](https://bitwarden.com).
    cp example_evironment.txt environment.env
    ```
 
-1. Edit the file `environment.env` and replace all `-----> changeme <-----` values.
+1. Edit the newly created file `.env` and replace all `-----> changeme <-----` values.
    Different steps are necessary to generate the values. These steps are shown below.
 
    1. The first step is to set the username (parameter `DOCKER_INFLUXDB_INIT_PASSWORD`)
