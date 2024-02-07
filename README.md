@@ -44,7 +44,7 @@ I recommend using a password manager like [Bitwarden](https://bitwarden.com).
    1. The first step is to set the username (parameter `DOCKER_INFLUXDB_INIT_PASSWORD`)
       and password (parameter `DOCKER_INFLUXDB_INIT_USERNAME`) for the Influx database.
       A possible username is `admin`. A secure password can be generated using the
-      a password manager. Using the command line interface of [Bitwarden](https://bitwarden.com)
+      a password manager. For example, using the command line interface of [Bitwarden](https://bitwarden.com)
       a secure password can be generated using the following command.
 
       ```zsh
