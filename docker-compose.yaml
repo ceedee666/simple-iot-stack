@@ -15,12 +15,11 @@ services:
       - ${MOSQUITTO_CFG_PATH}:/mosquitto/config/mosquitto.conf
     labels:
       - "traefik.enable=true"
-      - "traefik.tcp.routers.mosquitto.rule=HostSNI(`mqtt.localhost`) || HostSNI(`mqtt.${DUCKDNS_DOMAIN}`)"
-      - "traefik.tcp.routers.mosquitto.entrypoints=mqtt"
-      - "traefik.tcp.routers.mosquitto.services=mqtt"
-      - "traefik.tcp.routers.mosquitto.tls.certresolver=myresolver"
-      - "traefik.tcp.services.mosquitto.loadbalancer.server.scheme=tcp"
-      - "traefik.tcp.services.mosquitto.loadbalancer.server.port=1883"
+      - "traefik.tcp.routers.mqtt.rule=HostSNI(`mqtt.localhost`) || HostSNI(`mqtt.${DUCKDNS_DOMAIN}`)"
+      - "traefik.tcp.routers.mqtt.entrypoints=mqtt"
+      - "traefik.tcp.routers.mqtt.services=mosquitto"
+      - "traefik.tcp.routers.mqtt.tls.certresolver=myresolver"
+      - "traefik.tcp.services.mqtt.loadbalancer.server.port=1883"
 
   influxdb:
     image: influxdb:latest
@@ -87,6 +86,10 @@ services:
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
       - "--certificatesresolvers.myresolver.acme.email=drumm@fh-aachen.de"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    depends_on:
+      - influxdb
+      - grafana
+      - mosquitto
     restart: always
     ports:
       - "443:443"
