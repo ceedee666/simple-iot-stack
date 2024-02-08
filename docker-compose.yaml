@@ -70,8 +70,8 @@ services:
   traefik:
     image: traefik:latest
     command:
-      - "--log.level=DEBUG"
-      - "--api.insecure=true"
+      #- "--log.level=DEBUG"
+      #- "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.websecure.address=:443"
