@@ -6,8 +6,6 @@ services:
     env_file:
       - .env
     restart: always
-    #ports:
-    #  - ${MOSQUITTO_PORT}:1883
     expose:
       - 1883
     networks:
@@ -19,6 +17,9 @@ services:
       - "traefik.enable=true"
       - "traefik.tcp.routers.mosquitto.rule=HostSNI(`mqtt.localhost`) || HostSNI(`mqtt.${DUCKDNS_DOMAIN}`)"
       - "traefik.tcp.routers.mosquitto.entrypoints=mqtt"
+      - "traefik.tcp.routers.mosquitto.services=mqtt"
+      - "traefik.tcp.routers.mosquitto.tls.certresolver=myresolver"
+      - "traefik.tcp.services.mosquitto.loadbalancer.server.scheme=tcp"
       - "traefik.tcp.services.mosquitto.loadbalancer.server.port=1883"
 
   influxdb:
@@ -30,8 +31,6 @@ services:
       - .env
     entrypoint: ["./entrypoint.sh"]
     restart: always
-    #    ports:
-    #  - ${DOCKER_INFLUXDB_INIT_PORT}:8086
     expose:
       - 8086
     networks:
@@ -65,8 +64,6 @@ services:
       - .env
     depends_on:
       - influxdb
-    #    ports:
-    #  - ${GRAFANA_PORT}:3000
     expose:
       - 3000
     networks:
