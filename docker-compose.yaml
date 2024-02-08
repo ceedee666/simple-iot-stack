@@ -17,7 +17,6 @@ services:
       - "traefik.enable=true"
       - "traefik.tcp.routers.mqtt.rule=HostSNI(`mqtt.localhost`) || HostSNI(`mqtt.${DUCKDNS_DOMAIN}`)"
       - "traefik.tcp.routers.mqtt.entrypoints=mqtt"
-      - "traefik.tcp.routers.mqtt.services=mosquitto"
       - "traefik.tcp.routers.mqtt.tls.certresolver=myresolver"
       - "traefik.tcp.services.mqtt.loadbalancer.server.port=1883"
 
@@ -78,20 +77,30 @@ services:
     image: traefik:latest
     command:
       #- "--log.level=DEBUG"
-      #- "--api.insecure=true"
+      #- "--api.dashboard=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       - "--entrypoints.websecure.address=:443"
       - "--entrypoints.mqtt.address=:1883"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
       - "--certificatesresolvers.myresolver.acme.email=drumm@fh-aachen.de"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    labels:
+      #- "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.${DUCKDNS_DOMAIN}`)"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls.certresolver=myresolver"
+      - "traefik.http.routers.dashboard.service=api@internal"
     depends_on:
       - influxdb
       - grafana
       - mosquitto
     restart: always
     ports:
+      - "80:80"
       - "443:443"
       - "1883:1883"
     volumes:
