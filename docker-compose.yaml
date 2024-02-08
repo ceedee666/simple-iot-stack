@@ -6,13 +6,20 @@ services:
     env_file:
       - .env
     restart: always
-    ports:
-      - ${MOSQUITTO_PORT}:1883
+    #ports:
+    #  - ${MOSQUITTO_PORT}:1883
+    expose:
+      - 1883
     networks:
       - iot
     volumes:
       - mosquitto-all:/mosquitto
       - ${MOSQUITTO_CFG_PATH}:/mosquitto/config/mosquitto.conf
+    labels:
+      - "traefik.enable=true"
+      - "traefik.tcp.routers.mosquitto.rule=HostSNI(`mqtt.localhost`) || HostSNI(`mqtt.${DUCKDNS_DOMAIN}`)"
+      - "traefik.tcp.routers.mosquitto.entrypoints=mqtt"
+      - "traefik.tcp.services.mosquitto.loadbalancer.server.port=1883"
 
   influxdb:
     image: influxdb:latest
@@ -23,13 +30,15 @@ services:
       - .env
     entrypoint: ["./entrypoint.sh"]
     restart: always
-    ports:
-      - ${DOCKER_INFLUXDB_INIT_PORT}:8086
+    #    ports:
+    #  - ${DOCKER_INFLUXDB_INIT_PORT}:8086
+    expose:
+      - 8086
     networks:
       - iot
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.influxdb.rule=Host(`influxdb.localhost`)"
+      - "traefik.http.routers.influxdb.rule=Host(`influxdb.localhost`) || Host(`influxdb.${DUCKDNS_DOMAIN}`)"
       - "traefik.http.routers.influxdb.entrypoints=websecure"
       - "traefik.http.routers.influxdb.tls.certresolver=myresolver"
       - "traefik.http.services.influxdb.loadbalancer.server.port=8086"
@@ -56,13 +65,15 @@ services:
       - .env
     depends_on:
       - influxdb
-    ports:
-      - ${GRAFANA_PORT}:3000
+    #    ports:
+    #  - ${GRAFANA_PORT}:3000
+    expose:
+      - 3000
     networks:
       - iot
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.grafana.rule=Host(`grafana.localhost`)"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.localhost`) || Host(`grafana.${DUCKDNS_DOMAIN}`)"
       - "traefik.http.routers.grafana.entrypoints=websecure"
       - "traefik.http.routers.grafana.tls.certresolver=myresolver"
       - "traefik.http.services.grafana.loadbalancer.server.port=3000"
@@ -75,13 +86,14 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.mqtt.address=:1883"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
       - "--certificatesresolvers.myresolver.acme.email=drumm@fh-aachen.de"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     restart: always
     ports:
-      - "8080:8080"
       - "443:443"
+      - "1883:1883"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./traefik/letsencrypt:/letsencrypt"
