@@ -11,8 +11,9 @@ DOCKER_INFLUXDB_INIT_ADMIN_TOKEN= -----> changeme <-----
 MOSQUITTO_USERNAME= -----> changeme <-----
 MOSQUITTO_PASSWORD= -----> changeme <-----
 
-# Duck DNS domain 
-DUCKDNS_DOMAIN= -----> changeme <-----
+# Domain name e.g. from dynamic dns provider like Duck DNS
+# or localhost for local testing
+DOMAIN_NAME= -----> changeme <-----
 
 ################################################################################
 # Environment variables used during the setup and operation of the stack

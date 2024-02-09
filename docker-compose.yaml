@@ -15,7 +15,7 @@ services:
       - ${MOSQUITTO_CFG_PATH}:/mosquitto/config/mosquitto.conf
     labels:
       - "traefik.enable=true"
-      - "traefik.tcp.routers.mqtt.rule=HostSNI(`mqtt.localhost`) || HostSNI(`mqtt.${DUCKDNS_DOMAIN}`)"
+      - "traefik.tcp.routers.mqtt.rule=HostSNI(`mqtt.${DOMAIN_NAME}`)"
       - "traefik.tcp.routers.mqtt.entrypoints=mqtt"
       - "traefik.tcp.routers.mqtt.tls.certresolver=myresolver"
       - "traefik.tcp.services.mqtt.loadbalancer.server.port=1883"
@@ -35,7 +35,7 @@ services:
       - iot
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.influxdb.rule=Host(`influxdb.localhost`) || Host(`influxdb.${DUCKDNS_DOMAIN}`)"
+      - "traefik.http.routers.influxdb.rule=Host(`influxdb.${DOMAIN_NAME}`)"
       - "traefik.http.routers.influxdb.entrypoints=websecure"
       - "traefik.http.routers.influxdb.tls.certresolver=myresolver"
       - "traefik.http.services.influxdb.loadbalancer.server.port=8086"
@@ -68,7 +68,7 @@ services:
       - iot
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.grafana.rule=Host(`grafana.localhost`) || Host(`grafana.${DUCKDNS_DOMAIN}`)"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.${DOMAIN_NAME}`)"
       - "traefik.http.routers.grafana.entrypoints=websecure"
       - "traefik.http.routers.grafana.tls.certresolver=myresolver"
       - "traefik.http.services.grafana.loadbalancer.server.port=3000"
@@ -90,7 +90,7 @@ services:
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     labels:
       #- "traefik.enable=true"
-      - "traefik.http.routers.dashboard.rule=Host(`traefik.${DUCKDNS_DOMAIN}`)"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.${DOMAIN_NAME}`)"
       - "traefik.http.routers.dashboard.entrypoints=websecure"
       - "traefik.http.routers.dashboard.tls.certresolver=myresolver"
       - "traefik.http.routers.dashboard.service=api@internal"
