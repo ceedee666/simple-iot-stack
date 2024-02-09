@@ -35,6 +35,10 @@ services:
       - iot
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.influxdb-http.rule=Host(`influxdb.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.influxdb-http.entrypoints=web"
+      - "traefik.http.routers.influxdb-http.middlewares=influxdb-https"
+      - "traefik.http.middlewares.influxdb-https.redirectscheme.scheme=https"
       - "traefik.http.routers.influxdb.rule=Host(`influxdb.${DOMAIN_NAME}`)"
       - "traefik.http.routers.influxdb.entrypoints=websecure"
       - "traefik.http.routers.influxdb.tls.certresolver=myresolver"
@@ -68,6 +72,10 @@ services:
       - iot
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.grafana-http.rule=Host(`grafana.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.grafana-http.entrypoints=web"
+      - "traefik.http.routers.grafana-http.middlewares=grafana-https"
+      - "traefik.http.middlewares.grafana-https.redirectscheme.scheme=https"
       - "traefik.http.routers.grafana.rule=Host(`grafana.${DOMAIN_NAME}`)"
       - "traefik.http.routers.grafana.entrypoints=websecure"
       - "traefik.http.routers.grafana.tls.certresolver=myresolver"
@@ -81,8 +89,6 @@ services:
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
-      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
-      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       - "--entrypoints.websecure.address=:443"
       - "--entrypoints.mqtt.address=:1883"
       - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
