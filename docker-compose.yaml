@@ -7,7 +7,7 @@ services:
       - .env
     restart: always
     expose:
-      - 1883
+      - ${MOSQUITTO_PORT}
     networks:
       - iot
     volumes:
@@ -18,7 +18,7 @@ services:
       - "traefik.tcp.routers.mqtt.rule=HostSNI(`mqtt.${DOMAIN_NAME}`)"
       - "traefik.tcp.routers.mqtt.entrypoints=mqtt"
       - "traefik.tcp.routers.mqtt.tls.certresolver=myresolver"
-      - "traefik.tcp.services.mqtt.loadbalancer.server.port=1883"
+      - "traefik.tcp.services.mqtt.loadbalancer.server.port=${MOSQUITTO_PORT}"
 
   influxdb:
     image: influxdb:latest
@@ -30,7 +30,7 @@ services:
     entrypoint: ["./entrypoint.sh"]
     restart: always
     expose:
-      - 8086
+      - ${DOCKER_INFLUXDB_INIT_PORT}
     networks:
       - iot
     labels:
@@ -38,7 +38,7 @@ services:
       - "traefik.http.routers.influxdb.rule=Host(`influxdb.${DOMAIN_NAME}`)"
       - "traefik.http.routers.influxdb.entrypoints=websecure"
       - "traefik.http.routers.influxdb.tls.certresolver=myresolver"
-      - "traefik.http.services.influxdb.loadbalancer.server.port=8086"
+      - "traefik.http.services.influxdb.loadbalancer.server.port=${DOCKER_INFLUXDB_INIT_PORT}"
 
   telegraf:
     image: telegraf:latest
@@ -63,7 +63,7 @@ services:
     depends_on:
       - influxdb
     expose:
-      - 3000
+      - ${GRAFANA_PORT}
     networks:
       - iot
     labels:
@@ -71,7 +71,7 @@ services:
       - "traefik.http.routers.grafana.rule=Host(`grafana.${DOMAIN_NAME}`)"
       - "traefik.http.routers.grafana.entrypoints=websecure"
       - "traefik.http.routers.grafana.tls.certresolver=myresolver"
-      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+      - "traefik.http.services.grafana.loadbalancer.server.port=${GRAFANA_PORT}"
 
   traefik:
     image: traefik:latest
