@@ -15,9 +15,9 @@ services:
       - ${MOSQUITTO_CFG_PATH}:/mosquitto/config/mosquitto.conf
     labels:
       - "traefik.enable=true"
-      - "traefik.tcp.routers.mqtt.rule=HostSNI(`mqtt.${DOMAIN_NAME}`)"
+      - "traefik.tcp.routers.mqtt.rule=HostSNI(`*`)"
       - "traefik.tcp.routers.mqtt.entrypoints=mqtt"
-      - "traefik.tcp.routers.mqtt.tls.certresolver=myresolver"
+      #- "traefik.tcp.routers.mqtt.tls.certresolver=myresolver"
       - "traefik.tcp.services.mqtt.loadbalancer.server.port=${MOSQUITTO_PORT}"
 
   influxdb:
@@ -85,7 +85,7 @@ services:
     image: traefik:latest
     command:
       #- "--log.level=DEBUG"
-      #- "--api.dashboard=true"
+      - "--api.dashboard=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
@@ -95,7 +95,7 @@ services:
       - "--certificatesresolvers.myresolver.acme.email=drumm@fh-aachen.de"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
     labels:
-      #- "traefik.enable=true"
+      - "traefik.enable=true"
       - "traefik.http.routers.dashboard.rule=Host(`traefik.${DOMAIN_NAME}`)"
       - "traefik.http.routers.dashboard.entrypoints=websecure"
       - "traefik.http.routers.dashboard.tls.certresolver=myresolver"
