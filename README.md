@@ -1,6 +1,9 @@
 # Easy to use IoT Stack
 
-This repository contains the documentation for an easy to use IoT stack.
+This repository contains the documentation for an easy to use IoT stack. The main goal
+ist to prvoide a IoT stack that students can ues out of the box without to 
+much configuration effort. Furthermore, it should be able to deploy the stack on
+virtual machines hosted at one of the hyper scalers. 
 [I](https://drumm.sh) created this repository for one of my lectures at the [FH Aachen](http://fh-aachen.de)
 
 ## Quickstart ⚡
