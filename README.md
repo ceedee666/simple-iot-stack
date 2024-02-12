@@ -1,10 +1,39 @@
 # Easy to use IoT Stack
 
-This repository contains the documentation for an easy to use IoT stack. The main goal
-ist to prvoide a IoT stack that students can ues out of the box without to 
-much configuration effort. Furthermore, it should be able to deploy the stack on
-virtual machines hosted at one of the hyper scalers. 
+This repository contains the documentation for an easy to use IoT stack.
+The main goal is to provide an IoT stack that works out of the box,
+without to much configuration effort. Furthermore, it should be possible
+to deploy the stack on
+virtual machines hosted at one of the hyper scalers.
 [I](https://drumm.sh) created this repository for one of my lectures at the [FH Aachen](http://fh-aachen.de)
+
+The IoT stack consists of the following components:
+
+- [traefik](https://doc.traefik.io/traefik/) router
+- [Mosquitto](https://mosquitto.org/) MQTT broker
+- [InfluxDB](https://www.influxdata.com/) time series database
+- [Telegraf](https://www.influxdata.com/time-series-platform/telegraf/) data collection agent
+- [Grafana](https://grafana.com/)
+
+The following figure shows how these components are connected:
+
+![Simple IoT Stack Overview](./docs/overview.drawio.png)
+
+## Prerequisite
+
+In order to use the stack some basic knowledge of using the shell is required. A
+short introduction to using the shell can be found [here](https://ubuntu.com/tutorials/command-line-for-beginners).
+On computers running Linux or MacOS, the default shell can be used. On Windows I
+suggest install the [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install).
+
+Furthermore, the following software needs to be installed:
+
+- [Git](https://git-scm.com)
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [OpenSSH](https://www.openssh.com/)
+- [Visual Studio Code](https://code.visualstudio.com/) or a similar editor
+- A [password manager](https://en.wikipedia.org/wiki/List_of_password_managers)
 
 ## Quickstart ⚡
 
@@ -48,7 +77,8 @@ I recommend using a password manager like [Bitwarden](https://bitwarden.com).
       and password (parameter `DOCKER_INFLUXDB_INIT_USERNAME`) for the Influx database.
       A possible username is `admin`. A secure password can be generated using the
       a password manager. For example, using the command line interface of [Bitwarden](https://bitwarden.com)
-      a secure password can be generated using the following command.
+      a secure password can be generated using the following command or in the
+      UI of the password manager.
 
       ```zsh
         bw generate -p -c --words 5 --includeNumber
@@ -95,6 +125,10 @@ I recommend using a password manager like [Bitwarden](https://bitwarden.com).
       ```zsh
         docker-compose run --rm simple-iot-mosquitto mosquitto_passwd -c /mosquitto/conf/passwd mosquitto
       ```
+
+      This command:
+
+      1. Starts the mosquitto container
 
 ### Starting the stack
 
