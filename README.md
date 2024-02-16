@@ -3,7 +3,7 @@
 This repository contains the documentation for an easy to use IoT stack.
 The main goal is to provide an IoT stack that works out of the box,
 without to much configuration effort. Furthermore, it should be possible
-to deploy the stack on
+to deploy the stack both locally and on
 virtual machines hosted at one of the hyper scalers.
 [I](https://drumm.sh) created this repository for one of my lectures at the [FH Aachen](http://fh-aachen.de)
 
@@ -18,6 +18,16 @@ The IoT stack consists of the following components:
 The following figure shows how these components are connected:
 
 ![Simple IoT Stack Overview](./docs/overview.drawio.png)
+
+If the IoT stack is deployed locally, services are accessible using the following
+URL pattern: `<service-name>.localhost`.
+For example, the InfluxDB can be accessed via `influxdb.localhost`. If the
+IoT stack is deployed remotely one a virtual machine a dynamic DNS
+(e.g. [DuckDNS](https://duckdns.org)) service is required. In this case the
+services are accessible via the following URL pattern:
+`<service-name>.<domain-name>`. For example, if the DNS `simple-iot.duckdns.org`
+is used mapped to the IP of the virtual machine,
+the InfluxDB can be accessed via `influxdb.simple-iot.duckdns.org`.
 
 ## Prerequisite
 
@@ -67,7 +77,7 @@ I recommend using a password manager like [Bitwarden](https://bitwarden.com).
    using the following command.
 
    ```zsh
-   cp example_evironment.txt environment.env
+   cp example_environment.txt .env
    ```
 
 1. Edit the newly created file `.env` and replace all `-----> changeme <-----` values.
@@ -81,24 +91,24 @@ I recommend using a password manager like [Bitwarden](https://bitwarden.com).
       UI of the password manager.
 
       ```zsh
-        bw generate -p -c --words 5 --includeNumber
+      bw generate -p -c --words 5 --includeNumber
       ```
 
       After adding the username and password to the `environment.env` should look
       similar to the excerpt below.
 
       ```env
-        # Primary InfluxDB admin/superuser credentials
-        DOCKER_INFLUXDB_INIT_USERNAME=admin
-        DOCKER_INFLUXDB_INIT_PASSWORD=dummy-123-...
+      # Primary InfluxDB admin/superuser credentials
+      DOCKER_INFLUXDB_INIT_USERNAME=admin
+      DOCKER_INFLUXDB_INIT_PASSWORD=dummy-123-...
       ```
 
    1. Next, the API token for the Influx database needs to be generated
-      (parameter `DOCKER_INFLUXDB_INIT_ADMIN_TOKEN`). This can be done using
-      [OpenSSH](https://www.openssh.com/) command line interface.
+      (parameter `DOCKER_INFLUXDB_INIT_ADMIN_TOKEN`). This can be done using the
+      [OpenSSL](https://www.openssl.org/) command line interface.
 
       ```zsh
-        openssh rand -hex 32
+      openssl rand -hex 32
       ```
 
    1. The final step is to create the username and password for the
@@ -114,29 +124,50 @@ I recommend using a password manager like [Bitwarden](https://bitwarden.com).
       similar to the excerpt below.
 
       ```env
-        # Mosquitto username and password
-        MOSQUITTO_USERNAME=mosquitto
-        MOSQUITTO_PASSWORD=dummy-123-...
+      # Mosquitto username and password
+      MOSQUITTO_USERNAME=mosquitto
+      MOSQUITTO_PASSWORD=dummy-123-...
       ```
 
       To add the password for the user mosquitto to the `passwd` file use the
-      following command
+      following command:
 
       ```zsh
-        docker-compose run --rm simple-iot-mosquitto mosquitto_passwd -c /mosquitto/conf/passwd mosquitto
+      docker-compose run --rm mosquitto mosquitto_passwd -c /mosquitto/config/passwd mosquitto mosquitto
       ```
 
       This command:
 
-      1. Starts the mosquitto container
+      1. Starts the mosquitto container and removes it after execution of the commond (`run --rm mosquitto`).
+      2. Runs `mosquitto_passwd` to create the password file `/mosquitto/config/passwd_mossquitto` in the container.
+      3. Adds the user `mosquitto` (the last occurrence of mosquitto in the command) to the password file and prompts
+         for a password for this user.
 
 ### Starting the stack
 
 After finishing the configuration is is now time to start the IoT stack.
 
 ```zsh
-  docker-compose up -d
+docker-compose up -d
 ```
+
+This command causes a few things:
+
+1. The required container images are downloaded
+1. The volumes and the networks defined in the `docker-compose.yaml` are created
+1. The services are started.
+
+As the result a confirmation message similar to the following should be printed:
+
+```zsh
+ ✔ Container simple-iot-stack-influxdb-1   Started
+ ✔ Container simple-iot-stack-mosquitto-1  Started
+ ✔ Container simple-iot-stack-grafana-1    Started
+ ✔ Container simple-iot-stack-telegraf-1   Started
+ ✔ Container simple-iot-stack-traefik-1    Started
+```
+
+## Deployment on a Remote Virtual Machine
 
 ## Acknowledgement
 

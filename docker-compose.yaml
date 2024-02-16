@@ -17,7 +17,6 @@ services:
       - "traefik.enable=true"
       - "traefik.tcp.routers.mqtt.rule=HostSNI(`*`)"
       - "traefik.tcp.routers.mqtt.entrypoints=mqtt"
-      #- "traefik.tcp.routers.mqtt.tls.certresolver=myresolver"
       - "traefik.tcp.services.mqtt.loadbalancer.server.port=${MOSQUITTO_PORT}"
 
   influxdb:
