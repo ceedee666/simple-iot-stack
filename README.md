@@ -268,6 +268,7 @@ example the InfluxDB would be available via the
 URL `https://influxdb.my-simple-iot.duckdns.org`.
 
 ⚠️ **Warning** ⚠️
+
 If you deploy the simple IoT stack on a VM make sure to connect to the
 Grafana service immediately and change the default password
 (user: admin, password: admin).
