@@ -46,7 +46,7 @@ Furthermore, the following software needs to be installed:
 - [Visual Studio Code](https://code.visualstudio.com/) or a similar editor
 - A [password manager](https://en.wikipedia.org/wiki/List_of_password_managers)
 
-## Quickstart ⚡
+## Quickstart
 
 To use this IoT stack you need to follow the steps below. It is very important
 to change all the passwords before deploying the stack. To generate secure passwords
@@ -139,9 +139,12 @@ I recommend using a password manager like [Bitwarden](https://bitwarden.com).
 
       This command:
 
-      1. Starts the mosquitto container and removes it after execution of the commond (`run --rm mosquitto`).
-      2. Runs `mosquitto_passwd` to create the password file `/mosquitto/config/passwd_mossquitto` in the container.
-      3. Adds the user `mosquitto` (the last occurrence of mosquitto in the command) to the password file and prompts
+      1. Starts the mosquitto container and removes it after execution of
+         the commond (`run --rm mosquitto`).
+      2. Runs `mosquitto_passwd` to create the password file
+         `/mosquitto/config/passwd_mossquitto` in the container.
+      3. Adds the user `mosquitto` (the last occurrence of mosquitto in
+         the command) to the password file and prompts
          for a password for this user.
 
 ### Starting the stack
@@ -259,7 +262,7 @@ deployed in the free tier of the Oracle cloud.
       ```
 
 After the required software is installed, the IoT stack can be deployed as
-described in the [Quickstart-⚡](#quickstart-⚡) section. Once the IoT stack is
+described in the [Quickstart](#quickstart) section. Once the IoT stack is
 up and running the service can be accessed via the domain name. In this
 example the InfluxDB would be available via the
 URL `https://influxdb.my-simple-iot.duckdns.org`.
