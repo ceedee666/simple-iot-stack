@@ -133,7 +133,7 @@ I recommend using a password manager like [Bitwarden](https://bitwarden.com).
       following command:
 
       ```zsh
-      docker-compose run --rm mosquitto mosquitto_passwd -c /mosquitto/config/passwd mosquitto mosquitto
+      docker-compose run --rm mosquitto mosquitto_passwd -c /mosquitto/config/passwd mosquitto
       ```
 
       This command:
