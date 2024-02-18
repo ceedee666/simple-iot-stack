@@ -169,6 +169,14 @@ As the result a confirmation message similar to the following should be printed:
 
 ## Deployment on a Remote Virtual Machine
 
+```zsh
+chmod 400 <path-to-ssh-key>
+ssh -i <path-to-ssh-key> ubuntu@<domain-name>
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install docker docker-compose git neovim nano
+```
+
 ## Acknowledgement
 
 This repository is based on the following repositories, videos and documentation:
