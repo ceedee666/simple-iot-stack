@@ -57,13 +57,13 @@ I recommend using a password manager like [Bitwarden](https://bitwarden.com).
 1. Clone this repository using the command below.
 
    ```zsh
-   git clone https://github.com/ceedee666/simple-iot.git
+   git clone https://github.com/ceedee666/simple-iot-stack.git
    ```
 
    The result should be a file structure similar to this:
 
    ```zsh
-   simple-iot
+   simple-iot-stack
    ├── README.md
    ├── docker-compose.yaml
    ├── entrypoint.sh
