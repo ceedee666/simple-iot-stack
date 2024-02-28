@@ -2,3 +2,4 @@
 passwd
 acme.json
 *.bkp
+**/.DS_Store
