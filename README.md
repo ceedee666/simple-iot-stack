@@ -52,6 +52,11 @@ To use this IoT stack you need to follow the steps below. It is very important
 to change all the passwords before deploying the stack. To generate secure passwords
 I recommend using a password manager like [Bitwarden](https://bitwarden.com).
 
+The steps described in this section are also shown in the following
+video.
+
+[![Installation des IoT Stacks](https://img.youtube.com/vi/_bjv4_a2idU/hqdefault.jpg)](https://www.youtube.com/embed/_bjv4_a2idU)
+
 ### Preparation
 
 1. Clone this repository using the command below.
