@@ -8,7 +8,7 @@ DOCKER_INFLUXDB_INIT_PASSWORD= -----> changeme <-----
 DOCKER_INFLUXDB_INIT_ADMIN_TOKEN= -----> changeme <----- 
 
 # Mosquitto username and password
-MOSQUITTO_USERNAME= -----> changeme <-----
+MOSQUITTO_USERNAME=mosquitto
 MOSQUITTO_PASSWORD= -----> changeme <-----
 
 # Domain name e.g. from dynamic dns provider like Duck DNS
