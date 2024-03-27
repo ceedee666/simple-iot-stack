@@ -38,7 +38,7 @@ deployed in the free tier of the Oracle cloud.
 1. To enable connecting to the VM using a domain name a dynamic DNS service can
    be used. For example, [DuckDNS](https://duckdns.org) can be used to map a subdomain
    like `my-simple-iot` to the IP address of the VM. In this example the VM is
-   would now be accessable at `http://my-simple-iot.duckdns.org`. However,
+   would now be accessible at `http://my-simple-iot.duckdns.org`. However,
    no services are running on the VM yet.
    ![Mapping a Subdomain to the VM](./imgs/60-dyndns-oracle.png)
 
