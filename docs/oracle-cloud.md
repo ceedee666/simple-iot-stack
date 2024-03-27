@@ -7,20 +7,20 @@ deployed in the free tier of the Oracle cloud.
    click on _Create Instance_.
    1. On the _Create Compute Instance_ page provide a name for the instance.
       In the screenshot the name `simple-iot-stack` is used.
-      ![Creating a Compute Instance](./imgs/10-create-instance.png)
+      ![Creating a Compute Instance](./imgs/10-create-instance-oracle.png)
    1. Scroll down to the _Image and Shape_ area and click on _Edit_.
-      ![Changing the VM Image](./imgs/20-create-instance.png)
+      ![Changing the VM Image](./imgs/20-create-instance-oracle.png)
       The area expands to show more details. Click on _Change Image_
       and select the latest available Ubuntu image. Make sure to select
       the _Minimal_ version. This will create the smallest possible VM.
-      ![Selecting the Ubuntu Minimal Image](./imgs/30-create-instance.png)
+      ![Selecting the Ubuntu Minimal Image](./imgs/30-create-instance-oracle.png)
    1. Scroll down to the _Add SSH Keys_ section. Click on _Save private key_.
       This key is required to connect to the VM via SSH.
-      ![Saving the SSH key](./imgs/40-create-instance.png)
+      ![Saving the SSH key](./imgs/40-create-instance-oracle.png)
    1. Finally click on _Create_ to create the instance. Creating the VM will
       take a few moments. Once the VM is up and running a green icon is shown
       in the instances list.
-      ![Creating the instance](./imgs/50-create-instance.png)
+      ![Creating the instance](./imgs/50-create-instance-oracle.png)
 1. To enable the connection to the services of the IoT stack, a few firewall
    rules need to be added to the virtual network of the VM.
 
@@ -33,14 +33,14 @@ deployed in the free tier of the Oracle cloud.
       (`0.0.0.0/0`) to the ports 80, 444, and 1883 using the
       _Add Ingress Rule_ button. The resulting rules are shown in the following
       screenshot.
-      ![Resulting Ingress Rules](./imgs/70-ingress.png)
+      ![Resulting Ingress Rules](./imgs/70-ingress-oracle.png)
 
 1. To enable connecting to the VM using a domain name a dynamic DNS service can
    be used. For example, [DuckDNS](https://duckdns.org) can be used to map a subdomain
    like `my-simple-iot` to the IP address of the VM. In this example the VM is
    would now be accessable at `http://my-simple-iot.duckdns.org`. However,
    no services are running on the VM yet.
-   ![Mapping a Subdomain to the VM](./imgs/60-dyndns.png)
+   ![Mapping a Subdomain to the VM](./imgs/60-dyndns-oracle.png)
 
 1. The next step is to connect to the VM and install the required software.
 
